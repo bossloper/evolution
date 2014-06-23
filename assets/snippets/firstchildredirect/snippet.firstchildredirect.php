@@ -42,7 +42,7 @@ if (!defined('MODX_BASE_PATH')) {
 
 // Snippet parameter
 $docid = (isset($docid)) ? $docid : $modx->documentIdentifier;
-$respcode = (isset($responseCode)) ? (int) $responseCode : 301;
+$respcode = (isset($responseCode)) ? (int) $responseCode : 302; //uxello change default to 302
 $default = (isset($default)) ? $default : 'site_start';
 $sortBy = (isset($sortBy)) ? $sortBy : 'menuindex';
 $sortDir = (isset($sortDir)) ? $sortDir : 'ASC';
@@ -55,7 +55,7 @@ $rcodes = array(
 if (isset($rcodes[$respcode])) {
 	$respcode = $rcodes[$respcode];
 } else {
-	$respcode = $rcodes[301];
+	$respcode = $rcodes[302]; //uxello change default to 302
 }
 
 // Default document (in case there's no children)
