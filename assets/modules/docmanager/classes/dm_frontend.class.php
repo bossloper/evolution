@@ -21,7 +21,9 @@ class DocManagerFrontend {
     }
     
     function renderTemplates() {
-		$templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),'','id ASC');
+		// uxello mod to hide none * templates from all but admin
+		if ($_SESSION['mgrRole']!=1) $templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),"templatename LIKE '*%'",'id ASC');
+		else $templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),'','id ASC');
 	
 		$grd = new DataGrid('', $templateRecordSet);
 		$grd->noRecordMsg = $this->dm->lang['DM_tpl_no_templates'];
@@ -39,8 +41,10 @@ class DocManagerFrontend {
 	}   
 	
 	function renderTemplateVars() {
-		$templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),'','id ASC');
-
+		// uxello mod to hide none * templates from all but admin
+		if ($_SESSION['mgrRole']!=1) $templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),"templatename LIKE '*%'",'id ASC');
+		else $templateRecordSet = $this->modx->db->select('id,templatename,description', $this->modx->getFullTableName('site_templates'),'','id ASC');
+		
 		$grd = new DataGrid('', $templateRecordSet);
 		$grd->noRecordMsg = $this->dm->lang['DM_tpl_no_templates'];
 		$grd->cssClass = "grid";
