@@ -43,3 +43,11 @@
 .formoutline div {
 	margin-top:0.75em;	
 }
+
+/* for eForm messages*/
+.errors .requiredlist span:after {
+content: ", ";
+}
+.errors .requiredlist span:last-child:after {
+content: "";
+}
