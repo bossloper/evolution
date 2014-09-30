@@ -1,0 +1,46 @@
+body.mceContentBody
+ {
+	background: #fff;
+	border:0;
+	padding:10px;
+}
+
+.mceContentBody td,
+.mceContentBody th,
+.mceContentBody pre {
+	font-size:1em;	
+}
+
+/* class used for mobile browser phone link - just underline in editor so we can see it has been appiled */
+.mceContentBody .mobile_tel {
+	text-decoration:underline;
+}
+
+body.mceContentBody p:after {
+	content:"\00B6";color:#cc6666;
+}
+
+
+body.mceContentBody table {
+	border-collapse:separate!important;
+}
+
+.justifyleft {text-align:left !important; }
+.justifyright {text-align:right !important; }
+.justifycenter {text-align: center !important; }
+.justifyfull {text-align:justify !important; }
+
+img.justifyleft, table.justifyleft {float:left; margin-right:10px;margin-bottom:5px;}
+img.justifyright, table.justifyright {float:right; margin-left:10px;margin-bottom:5px;}
+img.justifycenter, table.justifycenter { display: block; margin-left: auto; margin-right: auto;}
+
+.mcePageBreak {
+	display:block !important;
+	border:0 !important;
+	margin:0 !important;
+	padding:0 !important;
+	width:100% !important;
+	height:12px !important;
+	border-top:1px dotted #ccc !important;
+	margin-top:15px !important;
+}

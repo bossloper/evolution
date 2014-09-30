@@ -1,0 +1,45 @@
+
+
+/* ----- submitted forms (eform) STANDARDISED FOR ALL FORMS ----- */
+.formoutline {
+	margin:10px 0;
+	padding:15px 5%;
+}
+.formoutline textarea {
+		width:95%;
+}
+.formoutline div input, .formoutline div select {
+		width:75%;
+}
+.formoutline .formnotice {
+	font-style:italic;
+}
+.formoutline .formmsg {
+	margin-top:10px;
+	color:<?=$c11?>;
+	font-weight:bold;
+}
+.formoutline input.required, .formoutline select.required, .formoutline textarea.required, 
+.formoutline input.invalid, .formoutline select.invalid, .formoutline textarea.invalid {
+	background-color:<?=$c11?>;
+	color:<?=$c1?>;
+}
+.formoutline label {
+	display:block;	
+}
+.formoutline label span { /* for required field text */
+	opacity:0.6;
+	filter:alpha(opacity=60);
+}
+
+/* input field border */
+.formoutline input, .formoutline textarea, .formoutline select {	
+	border:1px solid #333;
+	padding:4px 6px;
+	-webkit-border-radius: 3px; /* For Safari, etc. */
+    -moz-border-radius: 3px; /* For Mozilla, etc. */
+    border-radius: 3px; /* CSS3 Feature */
+}
+.formoutline div {
+	margin-top:0.75em;	
+}

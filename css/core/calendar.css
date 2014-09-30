@@ -1,0 +1,34 @@
+
+a.calnavbutton, input.calnavbutton {
+	background:	<?=$c5?>;
+	border:1px solid #333;
+	color:#fff;
+	padding:3px 8px;
+	text-decoration:none;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+   margin-left:.3em;
+}
+a.calnavbutton:hover, input.calnavbutton:hover {
+	background:	<?=$c6?>;
+}
+a.calnavbutton:active, input.calnavbutton:active {
+	color:#ccc;
+}
+
+
+
+
+/* iCalendar sync signup */
+.webcal-selection {
+	background:#eee;
+	padding:5px 10px;	
+}
+.webcal-categories, webcal-groups {
+float:left;
+width:50%;	
+}
+.webcal-link {
+	clear:both;
+}
