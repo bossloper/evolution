@@ -841,7 +841,7 @@ $_lang["role_web_user_management"] = 'Web-käyttäjän hallinta';
 $_lang["rss_url_news_default"] = 'http://feeds.feedburner.com/modx-announce';
 $_lang["rss_url_news_message"] = 'Anna MODX-uutisten osoite (RSS-syöte).';
 $_lang["rss_url_news_title"] = 'RSS / Uutiset';
-$_lang["rss_url_security_default"] = 'http://feeds.feedburner.com/modxsecurity';
+$_lang["rss_url_security_default"] = 'http://forums.modx.com/board.xml?board=295';
 $_lang["rss_url_security_message"] = 'Anna MODX-tietoturvatiedotteiden osoite (RSS-syöte).';
 $_lang["rss_url_security_title"] = 'RSS / Tietoturvatiedotteet';
 $_lang["run_module"] = 'Suorita moduuli';
@@ -856,6 +856,8 @@ $_lang["search_criteria_content"] = 'Sisältö';
 $_lang["search_criteria_content_msg"] = 'Hae sivut, joiden sisällöstä löytyy syötetty teksti.';
 $_lang["search_criteria_id"] = 'ID';
 $_lang["search_criteria_id_msg"] = 'Hae sivu ID-tunnuksella.';
+$_lang["search_criteria_template_id"] = 'Sivupohjan ID';
+$_lang["search_criteria_template_id_msg"] = 'Hae sivut, jotka käyttävät annettua sivupohjaa.';
 $_lang["search_criteria_longtitle"] = 'Pitkä otsikko';
 $_lang["search_criteria_longtitle_msg"] = 'Hae sivut, joiden pitkästä otsikosta löytyy syötetty teksti.';
 $_lang["search_criteria_title"] = 'Otsikko';
@@ -1264,3 +1266,11 @@ $_lang["login_processor_remotehost_ip"]      = "Your hostname doesn't point back
 $_lang["login_processor_remote_ip"]          = "You are not allowed to login from this location.";
 $_lang["login_processor_date"]               = "You are not allowed to login at this time. Please try again later.";
 $_lang["login_processor_captcha_config"]     = "Captcha is not configured properly.";
+
+$_lang["dp_dayNames"]   = "['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']";
+$_lang["dp_monthNames"] = "['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']";
+$_lang["dp_startDay"]   = "1";
+
+$_lang["check_all"] = "Select all";
+$_lang["check_none"] = "Select none";
+$_lang["check_toggle"] = "Toggle selection";
