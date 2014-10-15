@@ -202,6 +202,10 @@ foreach ( $crumbs as $c )
             }
         }
     }
+	
+//uxello fix for character encoding
+$charset = $modx->config['modx_charset'];
+$text = htmlentities($text, ENT_COMPAT, $charset);
 
     // Determine link/span class(es)
     if ( $c['id'] == $homeId )
