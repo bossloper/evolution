@@ -98,21 +98,37 @@ $modx->setPlaceholder('modx_security_notices',$_lang["security_notices_tab"]);
 $modx->setPlaceholder('modx_security_notices_title',$_lang["security_notices_title"]);
 $modx->setPlaceholder('modx_security_notices_content',$feedData['modx_security_notices_content']);
 
-// recent document info
-$html = $_lang["activity_message"].'<br /><br /><ul>';
-$rs = $modx->db->select('id, pagetitle, description', $modx->getFullTableName('site_content'), "deleted=0 AND (editedby=".$modx->getLoginUserID()." OR createdby=".$modx->getLoginUserID().")", 'editedon DESC', 10);
-$limit = $modx->db->getRecordCount($rs);
+// recent document info - modified by uxello to list all changes
+$sql = "SELECT sc.editedon as editedon, mu.username as username, sc.id, pagetitle, description FROM $dbase.`".$table_prefix."site_content` sc LEFT JOIN $dbase.`".$table_prefix."manager_users` mu ON sc.editedby=mu.id WHERE sc.deleted=0  ORDER BY editedon DESC LIMIT 75";
+$rs = mysql_query($sql);
+$limit = mysql_num_rows($rs);
 if($limit<1) {
-    $html .= '<li>'.$_lang['no_activity_message'].'</li>';
+    $html .= '<ul><li>'.$_lang['no_activity_message'].'</li></ul>';
 } else {
-    while ($content = $modx->db->getRow($rs)) {
-        $html.='<li><span style="width: 40px; text-align:right;">'.$content['id'].'</span> - <span style="width: 200px;"><a href="index.php?a=3&amp;id='.$content['id'].'">'.$content['pagetitle'].'</a></span>'.($content['description']!='' ? ' - '.$content['description'] : '').'</li>';
+	$html .= "<p>Click the underlined title to redirect to the page. Sort the table by clicking on the column headers.</p><table class='sortabletable rowstyle-even' border='0' cellpadding='2' cellspacing='1' bgcolor='#ccc' width='100%'  >";
+    $html .= "<thead>";
+    $html .= "<tr><th style='text-align:left;' class='sortable'>Date</th><th style='text-align:left;' class='sortable'>Manager</th><th style='text-align:left;' class='sortable'>ID</th><th style='text-align:left;' class='sortable'>Title/Description</th></tr>";  
+    $html .= "</thead>";    
+    $html .= "<tbody>";
+    for ($i = 0; $i < $limit; $i++) {
+        $content = mysql_fetch_assoc($rs);
+        if($i==0) {
+            $syncid = $content['id'];
+        }
+        
+
+        $html.="<tr class=".($i % 2 ? 'even' : '').">";
+        $html.="<td style='white-space:nowrap; vertical-align:top'>".$modx->toDateFormat($content['editedon'])."</td> <td style='vertical-align:top'>".$content['username']."</td><td style='text-align:right;vertical-align:top'>(".$content['id'].')</td><td style="vertical-align:top"><a href="index.php?a=3&amp;id='.$content['id'].'">'.$content['pagetitle'].'</a>'.($content['description']!='' ? ' - '.$content['description'] : '').'</td></tr>';
     }
+    $html .= "</tbody>";
+	$html .= '</table>';
 }
-$html.='</ul>';
+
 $modx->setPlaceholder('recent_docs',$_lang['recent_docs']);
 $modx->setPlaceholder('activity_title',$_lang['activity_title']);
 $modx->setPlaceholder('RecentInfo',$html);
+
+
 
 // user info
 $modx->setPlaceholder('info',$_lang['info']);
