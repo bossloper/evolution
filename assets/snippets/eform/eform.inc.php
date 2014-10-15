@@ -391,6 +391,7 @@ $_dfnMaxlength = 6;
 				# send abuse alert
 					$modx->mail->IsHTML($isHtml);
 					$modx->mail->From		= $modx->config['emailsender'];
+$mail->Sender   = $modx->config['emailsender']; // uxello
 					$modx->mail->FromName	= $modx->config['site_name'];
 					$modx->mail->Subject	= $_lang['ef_mail_abuse_subject'];
 					$modx->mail->Body		= $body;
@@ -507,6 +508,7 @@ $_dfnMaxlength = 6;
 					if($sendirect) $to = $firstEmail;
 					$modx->mail->IsHTML($isHtml);
 					$modx->mail->From		= $from;
+$mail->Sender   = $modx->config['emailsender']; // uxello
 					$modx->mail->FromName	= $fromname;
 					$modx->mail->Subject	= $subject;
 					$modx->mail->Body		= (!$isHtml) ? $report : htmlspecialchars_decode($report, ENT_QUOTES);
@@ -524,6 +526,7 @@ $_dfnMaxlength = 6;
 				if($ccsender && $firstEmail != '') {
 					$modx->mail->IsHTML($isHtml);
 					$modx->mail->From		= $from;
+$mail->Sender   = $modx->config['emailsender']; // uxello
 					$modx->mail->FromName	= $fromname;
 					$modx->mail->Subject	= $subject;
 					$modx->mail->Body		= (!$isHtml) ? $report : htmlspecialchars_decode($report, ENT_QUOTES);
@@ -541,6 +544,7 @@ $_dfnMaxlength = 6;
 					$autotext = formMerge($autotext,$fields);
 					$modx->mail->IsHTML($isHtml);
 					$modx->mail->From		= ($autosender)? $autosender:$from;
+$mail->Sender   = $modx->config['emailsender']; // uxello
 					$modx->mail->FromName	= ($autoSenderName)?$autoSenderName:$fromname;
 					$modx->mail->Subject	= $subject;
 					$modx->mail->Body		= (!$isHtml) ? $autotext : htmlspecialchars_decode($autotext, ENT_QUOTES);
@@ -556,6 +560,7 @@ $_dfnMaxlength = 6;
 					$mobiletext = formMerge($mobiletext,$fields);
 					$modx->mail->IsHTML($isHtml);
 					$modx->mail->From		= $from;
+$mail->Sender   = $modx->config['emailsender']; // uxello
 					$modx->mail->FromName	= $fromname;
 					$modx->mail->Subject	= $subject;
 					$modx->mail->Body		= (!$isHtml) ? $mobiletext : htmlspecialchars_decode($mobiletext, ENT_QUOTES);
