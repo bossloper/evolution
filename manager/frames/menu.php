@@ -383,7 +383,13 @@ if (!empty($reportsmenu)) {
 	     implode("\n\t\t", $reportsmenu),
 	     "\n\t</ul></li>\n";
 }
+
+echo '<li><a style="color:#9F9;" title="Go to \'frontend\' website" href="../" target="_parent">Website &raquo;</a></li>';// uxello
+
 ?>
+
+
+
 	</ul>
 </div>
 </div>
