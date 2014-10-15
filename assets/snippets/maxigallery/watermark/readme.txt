@@ -1,0 +1,1 @@
+increase thumbnail memory limit to 256M
