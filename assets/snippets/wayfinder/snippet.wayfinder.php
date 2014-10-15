@@ -61,7 +61,8 @@ $wf->_config = array(
 	'titleOfLinks' => isset($titleOfLinks) ? $titleOfLinks : 'pagetitle',
 	'displayStart' => isset($displayStart) ? $displayStart : FALSE,
 	'entityEncode' => isset($entityEncode) ? $entityEncode : TRUE,
-	'hereId' => isset($hereId) ? intval($hereId) : $modx->documentIdentifier
+	'hereId' => isset($hereId) ? intval($hereId) : $modx->documentIdentifier,
+'includePrivates' => isset($includePrivates) ? $includePrivates : 0 // uxello
 );
 
 //get user class definitions

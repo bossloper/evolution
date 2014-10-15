@@ -435,7 +435,9 @@ class Wayfinder {
 	        // get document groups for current user
 	        if($docgrp = $modx->getUserDocGroups()) $docgrp = implode(",",$docgrp);
 	        // build query
-	        $access = ($modx->isFrontend() ? "sc.privateweb=0" : "1='{$_SESSION['mgrRole']}' OR sc.privatemgr=0").(!$docgrp ? "" : " OR dg.document_group IN ({$docgrp})");
+	        //$access = ($modx->isFrontend() ? "sc.privateweb=0" : "1='{$_SESSION['mgrRole']}' OR sc.privatemgr=0").(!$docgrp ? "" : " OR dg.document_group IN ({$docgrp})");
+			//uxello mod			
+			$access = ($modx->isFrontend() ? "sc.privateweb=0 OR sc.id IN ({$this->_config['includePrivates']})" : "1='{$_SESSION['mgrRole']}' OR sc.privatemgr=0").(!$docgrp ? "" : " OR dg.document_group IN ({$docgrp})");
 			//run the query
 			$result = $modx->db->select(
 				"DISTINCT {$fields}",
@@ -471,6 +473,7 @@ class Wayfinder {
 				} else {
 					$tempDocInfo['link'] = $modx->makeUrl($tempDocInfo['id'],'','',$linkScheme);
 				}
+$tempDocInfo['link']=htmlentities($tempDocInfo['link']); //uxello fix
 				//determine the level, if parent has changed
 				if ($prevParent !== $tempDocInfo['parent']) {
 					$level = count($modx->getParentIds($tempDocInfo['id'])) + 1 - $startLevel;
