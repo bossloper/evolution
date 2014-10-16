@@ -88,6 +88,44 @@ echo $cm->render();
 <div class="section">
 <div class="sectionBody">
 	<p><?php echo $_lang['web_user_management_msg']; ?></p>
+    
+    
+       	<?php 
+    //uxello add webuser summary
+	    
+	$sql = "SELECT count(wu.id) as ct FROM ".$modx->getFullTableName("web_users")." wu ";
+	$rs = mysql_query($sql);
+	if (mysql_num_rows($rs) == 1) {
+		while ($row = mysql_fetch_assoc($rs)) {
+			echo "<p>Total web users: ".$row['ct'].'</p>';
+		}
+	}
+
+	$sql = "SELECT  count(wu.id) as ct"
+			." FROM ".$modx->getFullTableName("web_users")." wu "
+			." INNER JOIN ".$modx->getFullTableName("web_user_attributes")." wua ON wua.internalKey=wu.id "
+			." WHERE wua.logincount"
+			;		
+	$rs = mysql_query($sql);
+	if (mysql_num_rows($rs) == 1) {
+		while ($row = mysql_fetch_assoc($rs)) {
+			echo "<p>Successfully registered and logged in:".$row['ct'].'</p>';
+		}
+	}
+
+	$timetocheck = (time()-(60*60*24));//+$server_offset_time;
+	$sql = "SELECT count(au.internalKey) as ct FROM ".$modx->getFullTableName("active_users")." au WHERE au.internalKey<0 AND au.lasthit>'$timetocheck'";
+	$rs = mysql_query($sql);
+	if (mysql_num_rows($rs) == 1) {
+		while ($row = mysql_fetch_assoc($rs)) {
+			echo "<p>Seen in the last 24hrs: ".$row['ct'].'</p>';
+		}
+	}
+	
+    ?>
+    
+    
+    
 	<div class="searchbar">
 		<table border="0" style="width:100%" class="actionButtons">
 			<tr>
@@ -105,23 +143,42 @@ echo $cm->render();
 	</div>
 	<div>
 	<?php
+//uxello add webgroups
+	$sql = "SELECT GROUP_CONCAT(wgn.name SEPARATOR ', ') AS webgroups,wu.id,wu.username,wua.fullname,wua.email,IF(wua.gender=1,'".$_lang['user_male']."',IF(wua.gender=2,'".$_lang['user_female']."','-')) as 'gender',IF(wua.blocked,'".$_lang['yes']."','-') as 'blocked'" .
 
-	$ds = $modx->db->select(
-		"wu.id, wu.username, wua.fullname, wua.email, ELT(wua.gender, '{$_lang['user_male']}', '{$_lang['user_female']}', '{$_lang['user_other']}') AS gender, IF(wua.blocked,'{$_lang['yes']}','-') as 'blocked'",
-		$modx->getFullTableName("web_users")." wu 
-			INNER JOIN ".$modx->getFullTableName("web_user_attributes")." wua ON wua.internalKey=wu.id",
-		($sqlQuery ? "(wu.username LIKE '{$sqlQuery}%') OR (wua.fullname LIKE '%{$sqlQuery}%') OR (wua.email LIKE '%{$sqlQuery}%')":""),
-		'username'
-		);
-	include_once MODX_MANAGER_PATH."includes/controls/datagrid.class.php";
+//uxello add email dup check
+",IF(wuae.ct>1,' (Warning: shared email address)',' ') as 'ctfmt'".
+",FROM_UNIXTIME(wuau.lasthit,'%Y/%m/%d') as 'lastseenfmt'".
+	
+			"FROM ".$modx->getFullTableName("web_users")." wu ".
+			"INNER JOIN ".$modx->getFullTableName("web_user_attributes")." wua ON wua.internalKey=wu.id ".
+			
+//uxello add email dup check			
+"LEFT JOIN (select email, count(email) as ct from ".$modx->getFullTableName("web_user_attributes")." WHERE email !='' GROUP BY email) wuae ON wuae.email=wua.email ".
+
+"LEFT JOIN ".$modx->getFullTableName("active_users")." wuau ON -wuau.internalKey=wu.id AND wuau.internalKey<0 ".
+
+
+//uxello add webgroups
+    "LEFT JOIN ".$modx->getFullTableName("web_groups")." AS wg ON wu.id = wg.webuser ".
+    "LEFT JOIN ".$modx->getFullTableName("webgroup_names")." AS wgn ON wg.webgroup = wgn.id ".
+
+
+			
+			($sqlQuery ? " WHERE (wu.username LIKE '{$sqlQuery}%') OR (wua.fullname LIKE '%{$sqlQuery}%') OR (wua.email LIKE '%{$sqlQuery}%')":"")." ".
+			"GROUP BY wu.id ORDER BY username"; //uxello add webgroups
+	$ds = mysql_query($sql);
+	include_once $base_path."manager/includes/controls/datagrid.class.php";
 	$grd = new DataGrid('',$ds,$number_of_results); // set page size to 0 t show all items
 	$grd->noRecordMsg = $_lang["no_records_found"];
 	$grd->cssClass="grid";
 	$grd->columnHeaderClass="gridHeader";
 	$grd->itemClass="gridItem";
 	$grd->altItemClass="gridAltItem";
-	$grd->fields="id,username,fullname,email,gender,blocked";
-	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,".$_lang["user_gender"]." ,".$_lang["user_block"];
+//uxello	$grd->fields="id,username,fullname,email,gender,blocked";
+$grd->fields="id,username,fullname,email,lastlogin,blocked,webgroups";
+//uxello	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,".$_lang["user_gender"]." ,".$_lang["user_block"];
+	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Seen ,".$_lang["user_block"].", Webgroup(s)";
 	$grd->colWidths="34,,,,40,34";
 	$grd->colAligns="center,,,,center,center";
 	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='".$_style["icons_user"]."' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>";
