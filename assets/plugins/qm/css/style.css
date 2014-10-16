@@ -323,3 +323,54 @@
 	-moz-box-shadow: 0 0 10px #b8c7d6;
 	box-shadow:  0 0 10px #b8c7d6;
 }
+
+/* uxello adjustments */
+html { margin-top: 32px; }
+* html body { margin-top: 32px; }
+
+#qmClose {
+	display:none;	
+}
+
+#qmEditor {
+	top:0;
+	background: url("../../../../manager/media/style/MODxREUX/images/misc/headers.jpg") repeat scroll 0 0 #23393C;
+    opacity:1; 
+    -ms-filter:"" !important;
+    filter:none !important;
+}
+#qmEditor .qmId {
+	color: #999;
+}
+#qmEditor .qmButton, .qm-edit, .qm-new, .qm-tv, .qm-save, .qm-cancel  
+{
+	
+background-color: #555;
+color:#ddd;
+border-color:#666;
+	-webkit-text-shadow: 1px 1px 0 #000;
+	-moz-text-shadow: 0 1px 1px #000;
+	text-shadow: 0 1px 1px #000;
+}
+#qmEditor .qmButton:hover, .qm-edit:hover, .qm-new:hover, .qm-tv:hover, .qm-save:hover, .qm-cancel:hover  
+{
+	color:#fff;
+}
+
+#qmEditor .qmButton.qmEdit{
+	border-color: #993!important;
+	background-color:#330;
+}
+
+#qmEditor .qm-custom-1 {
+	margin-left:30px;
+}
+
+#qmEditor .qmButton.qmManager {
+	border-color: #393 !important;
+	background-color:#030;
+}
+
+#qmEditor #qmLogout {
+	margin-left:30px;
+}
