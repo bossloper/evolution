@@ -66,11 +66,14 @@ switch ($input['mode']) {
 			webAlertAndQuit("User name is already in use!");
 		}
 
-		// check if the email address already exist
-		$rs = $modx->db->select('count(id)', $tbl_web_user_attributes, "email='{$esc_email}' AND id!='{$id}'");
-		$limit = $modx->db->getValue($rs);
-		if ($limit > 0) {
-				webAlertAndQuit("Email is already in use!");
+		//uxello mod to allow duplicate email addresses if option is set
+		if (!$modx->config["allow_multiple_emails"]) {
+			// check if the email address already exist
+			$rs = $modx->db->select('count(id)', $tbl_web_user_attributes, "email='{$esc_email}' AND id!='{$id}'");
+			$limit = $modx->db->getValue($rs);
+			if ($limit > 0) {
+					webAlertAndQuit("Email is already in use!");
+		}
 		}
 
 		// generate a new password for this user
@@ -214,11 +217,14 @@ switch ($input['mode']) {
 				webAlertAndQuit("User name is already in use!");
 		}
 
-		// check if the email address already exists
-		$rs = $modx->db->select('count(internalKey)', $tbl_web_user_attributes, "email='{$esc_email}' AND internalKey!='{$id}'");
-		$limit = $modx->db->getValue($rs);
-		if ($limit > 0) {
-				webAlertAndQuit("Email is already in use!");
+		//uxello mod to allow duplicate email addresses if option is set
+		if (!$modx->config["allow_multiple_emails"]) {
+			// check if the email address already exists
+			$rs = $modx->db->select('count(internalKey)', $tbl_web_user_attributes, "email='{$esc_email}' AND internalKey!='{$id}'");
+			$limit = $modx->db->getValue($rs);
+			if ($limit > 0) {
+					webAlertAndQuit("Email is already in use!");
+		}
 		}
 
 		// invoke OnBeforeWUsrFormSave event
