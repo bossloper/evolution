@@ -46,13 +46,16 @@ if(!isset($_SESSION['webValidated'])){
                 a.style.display="block";
                 b.style.display="none";
                 document.forms['loginreminder'].txtpwdrem.value = 0;
+            	if (document.forms['loginfrm'] && document.forms['loginfrm'].username.value=='') document.forms['loginfrm'].username.focus(); //uxello add focus
+				else if (document.forms['loginfrm']) document.forms['loginfrm'].password.focus(); //uxello add focus
             }
             else if(i==2 && a && b) {
                 a.style.display="none";
                 b.style.display="block";
                 document.forms['loginreminder'].txtpwdrem.value = 1;
-            }
-        };
+            	if (document.forms['loginreminder']) document.forms['loginreminder'].txtwebemail.focus(); //uxello add focus
+			}
+        };        
         function webLoginCheckRemember () {
             if(document.loginfrm.rememberme.value==1) {
                 document.loginfrm.rememberme.value=0;
@@ -93,6 +96,15 @@ if(!isset($_SESSION['webValidated'])){
         if (document.loginfrm) <?php echo !empty($uid) ? "document.loginfrm.password.focus()" : "document.loginfrm.username.focus()" ?>;
     </script>
     <?php
+
+//uxello
+# process show confirm password reset message
+if ($_REQUEST["webloginmode"]=='actpok') {
+	$output .= webLoginAlert("Your new password was successfully activated.");
+	return;
+}
+	
+	
     $output .= ob_get_contents();
     ob_end_clean();
 } else {
