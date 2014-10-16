@@ -72,7 +72,16 @@ defined('IN_PARSER_MODE') or die();
 			'wu.*, wua.fullname',
 			$modx->getFullTableName('web_users')." AS wu INNER JOIN ".$modx->getFullTableName('web_user_attributes')." AS wua ON wua.internalkey=wu.id",
 			"wua.email='".$modx->db->escape($email)."'");
-        if($row = $modx->db->getRow($ds)) {
+
+//uxello - modify to enable sending to accounts with duplicate email addresses
+$limit = $modx->recordCount($ds); //uxello
+if($limit>=1) {		
+// loop each record
+while ( $row = $modx->db->getRow($ds) ) {
+      //  if($row = $modx->db->getRow($ds)) {
+
+
+
             $newpwd = webLoginGeneratePassword(8);
             $newpwdkey = webLoginGeneratePassword(8); // activation key
             
@@ -108,13 +117,19 @@ defined('IN_PARSER_MODE') or die();
                 $output =  webLoginAlert("Error while sending mail to $email. Please contact the Site Administrator");
                 return;
             }
-            if(!$pwdReqId) $output = webLoginAlert("Please check your email account ($email) for login instructions.");
-            else {
+            if(!$pwdReqId) {
+				$output = webLoginAlert("Please check your email account ($email) for login instructions.");
+				if ($limit>1) $output = webLoginAlert("Please check your email account ($email) for login instructions.\n\nNote you will receive ".$limit." reset emails, one for each account associated with this email address. Please ignore emails not related to the account you wish to reset the password for.");
+			}
+			else {
                 // redirect to password request notification page
                 $url = $modx->makeURL($pwdReqId);
                 $modx->sendRedirect($url,0,'REDIRECT_REFRESH');
             }
+
+
         }
+}	// uxello end limit check
         else {
             $output = webLoginAlert("We are sorry! We cannot locate an account using that email.");
         }
@@ -123,9 +138,8 @@ defined('IN_PARSER_MODE') or die();
 
     }
 
-
-# process logout
-    if ($isLogOut==1){
+//uxello create function so we can keep manager session if webusre login fails
+function webuserlogout() {
         $internalKey = $_SESSION['webInternalKey'];
         $username = $_SESSION['webShortname'];
 
@@ -166,6 +180,25 @@ defined('IN_PARSER_MODE') or die();
 //            startCMSSession();
 //            session_destroy();
         }
+
+} //uxello function
+
+
+# process logout
+    if ($isLogOut==1){
+        $internalKey = $_SESSION['webInternalKey'];
+        $username = $_SESSION['webShortname'];
+
+        // invoke OnBeforeWebLogout event
+        $modx->invokeEvent("OnBeforeWebLogout",
+                                array(
+                                    "userid"   => $internalKey,
+                                    "username" => $username
+                                ));
+
+
+//uxello
+webuserlogout();
 
         // invoke OnWebLogout event
         $modx->invokeEvent("OnWebLogout",
@@ -231,9 +264,10 @@ defined('IN_PARSER_MODE') or die();
     }
 
     if($failedlogins>=$modx->config['failed_login_attempts'] && $blockeduntildate>time()) {    // blocked due to number of login errors.
-        session_destroy();
-        session_unset();
-        $output = webLoginAlert("Due to too many failed logins, you have been blocked!");
+        webuserlogout(); //uxello
+		//session_destroy();
+        //session_unset();
+        $output = webLoginAlert("Due to too many failed logins you have temporarily been blocked until: ".date("d-M-Y H:i:s",$blockeduntildate)."\n\nPlease try again later or reset your password."); // uxello add more message info
         return;
     }
 
@@ -246,27 +280,31 @@ defined('IN_PARSER_MODE') or die();
 			$modx->getFullTableName('web_user_attributes'),
 			"internalKey='{$internalKey}'"
 			);
+		$failedlogins=0; //uxello fix
     }
 
     if($blocked=="1") { // this user has been blocked by an admin, so no way he's loggin in!
-        session_destroy();
-        session_unset();
+        webuserlogout(); //uxello
+		//session_destroy();
+        //session_unset();
         $output = webLoginAlert("You are blocked and cannot log in!");
         return;
     }
 
     // blockuntil
     if($blockeduntildate>time()) { // this user has a block until date
-        session_destroy();
-        session_unset();
+        webuserlogout(); //uxello
+		//session_destroy();
+        //session_unset();
         $output = webLoginAlert("You are blocked and cannot log in! Please try again later.");
         return;
     }
 
     // blockafter
     if($blockedafterdate>0 && $blockedafterdate<time()) { // this user has a block after date
-        session_destroy();
-        session_unset();
+        webuserlogout(); //uxello
+		//session_destroy();
+        //session_unset();
         $output = webLoginAlert("You are blocked and cannot log in! Please try again later.");
         return;
     }
@@ -302,7 +340,11 @@ defined('IN_PARSER_MODE') or die();
     if (!$rt||(is_array($rt) && !in_array(TRUE,$rt))) {
         // check user password - local authentication
         if($dbasePassword != md5($givenPassword)) {
-            $output = webLoginAlert("Incorrect username or password entered!");
+			$loginsleft=$modx->config['failed_login_attempts']-($failedlogins+1); //uxello enhancement
+			
+			if ($loginsleft<=0) $output = webLoginAlert("Incorrect username or password entered!\nNo attempts left.");
+			else if ($loginsleft==1) $output = webLoginAlert("Incorrect username or password entered!\n{$loginsleft} attempt left.");
+			else $output = webLoginAlert("Incorrect username or password entered!\n{$loginsleft} attempts left.");
             $newloginerror = 1;
         }
     }
@@ -316,7 +358,7 @@ defined('IN_PARSER_MODE') or die();
 
     if(isset($newloginerror) && $newloginerror==1) {
         $failedlogins += $newloginerror;
-        if($failedlogins>=$modx->config['failed_login_attempts']) { //increment the failed login counter, and block until!
+        if($failedlogins>=$modx->config['failed_login_attempts']) { //increment the failed login counter, and block!
 			$modx->db->update(
 				array(
 					'failedlogincount' => $failedlogins,
@@ -334,8 +376,9 @@ defined('IN_PARSER_MODE') or die();
 				"internalKey='{$internalKey}'"
 				);
         }
-        session_destroy();
-        session_unset();
+		webuserlogout(); //uxello
+        //session_destroy();
+        //session_unset();
         return;
     }
 
