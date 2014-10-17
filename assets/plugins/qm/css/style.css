@@ -335,6 +335,7 @@ html { margin-top: 32px; }
 #qmEditor {
 	top:0;
 	background: url("../../../../manager/media/style/MODxREUX/images/misc/headers.jpg") repeat scroll 0 0 #23393C;
+	border-bottom: 1px solid #444;
     opacity:1; 
     -ms-filter:"" !important;
     filter:none !important;
