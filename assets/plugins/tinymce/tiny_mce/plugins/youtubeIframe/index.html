@@ -12,21 +12,28 @@
 
         <form onsubmit="YoutubeDialog.insert();return false;" action="#">
             <p>
-                <label for="youtubeURL">{#youtube_dlg.url_field} <br/>{#youtube_dlg.url_example1}: http://www.youtube.com/watch?v=gNOJWXjrNIE <br/>{#youtube_dlg.url_example2}: http://www.youtube.com/watch?v=<b>gNOJWXjrNIE</b> </label>
+                <label for="youtubeURL">{#youtube_dlg.url_field} <br/>{#youtube_dlg.url_example1}: http://www.youtube.com/watch?v=lfbX2PwENiE <br/>{#youtube_dlg.url_example2}: lfbX2PwENiE </label>
                 <input id="youtubeURL" name="youtubeURL" type="text" class="text" style="width:100%" />
             </p>
 
 
             <b>{#youtube_dlg.choose_size}:</b>
             <ul class="share-embed-size-list">
-                <li class="share-embed-size default wide">
+                <li class="share-embed-size default wide selected">
+                    <label>
+                        <input type="radio" data-height="180" data-width="320" class="share-embed-size-radio " value="default" name="share-embed-size" />
+                            <span class="share-embed-size-name">320 × 180</span>
+                            <span class="share-embed-size-box default"></span>
+                    </label>
+                </li>
+                <li class="share-embed-size medium wide">
                     <label>
                         <input type="radio" data-height="315" data-width="560" class="share-embed-size-radio " value="default" name="share-embed-size" />
                             <span class="share-embed-size-name">560 × 315</span>
                             <span class="share-embed-size-box default"></span>
                     </label>
                 </li>
-                <li class="share-embed-size medium wide">
+                <li class="share-embed-size large wide">
                     <label>
                         <input type="radio" data-height="360" data-width="640" class="share-embed-size-radio " value="medium" name="share-embed-size" />
                             <span class="share-embed-size-name">640 × 360</span>
@@ -34,8 +41,8 @@
                     </label>
                 </li>
 
-
-                <li class="share-embed-size custom selected">
+<!--
+                <li class="share-embed-size custom">
                     <label>
                         <input type="radio" data-height="-1" data-width="-1" class="share-embed-size-radio share-embed-size-radio-custom" value="custom" name="share-embed-size" />
                             <span class="share-embed-size-name">
@@ -57,6 +64,7 @@
                         </li>
                     </ul>
                 </li>
+                -->
             </ul>
             <div class="clear"></div>
             
