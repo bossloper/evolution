@@ -26,29 +26,16 @@
                             <span class="share-embed-size-box default"></span>
                     </label>
                 </li>
-                <li class="share-embed-size medium wide selected">
+                <li class="share-embed-size medium wide">
                     <label>
                         <input type="radio" data-height="360" data-width="640" class="share-embed-size-radio " value="medium" name="share-embed-size" />
                             <span class="share-embed-size-name">640 × 360</span>
                             <span class="share-embed-size-box medium"></span>
                     </label>
                 </li>
-                <li class="share-embed-size large wide">
-                    <label>
-                        <input type="radio" data-height="480" data-width="853" class="share-embed-size-radio " value="large" name="share-embed-size" />
-                            <span class="share-embed-size-name">853 × 480</span>
-                            <span class="share-embed-size-box large"></span>
-                    </label>
-                </li>
-                <li class="share-embed-size hd720 wide">
-                    <label>
-                        <input type="radio" data-height="720" data-width="1280" class="share-embed-size-radio  hd" value="hd720" name="share-embed-size" />
-                            <span class="share-embed-size-name">1280 × 720</span>
-                            <span class="share-embed-size-box hd720"></span>
-                    </label>
-                </li>
 
-                <li class="share-embed-size custom">
+
+                <li class="share-embed-size custom selected">
                     <label>
                         <input type="radio" data-height="-1" data-width="-1" class="share-embed-size-radio share-embed-size-radio-custom" value="custom" name="share-embed-size" />
                             <span class="share-embed-size-name">
@@ -59,22 +46,27 @@
                         <li>
                             <label>
                                 {#youtube_dlg.Width}:
-                                <input type="text" maxlength="4" value="300" class="yt-uix-form-input-text share-embed-size-custom-width" /> px
+                                <input type="text" maxlength="4" value="320" class="yt-uix-form-input-text share-embed-size-custom-width" /> px
                             </label>
                         </li>
                         <li>
                             <label>
                                 {#youtube_dlg.Height}:
-                                <input type="text" maxlength="4" value="300" class="yt-uix-form-input-text share-embed-size-custom-height" /> px
+                                <input type="text" maxlength="4" value="180" class="yt-uix-form-input-text share-embed-size-custom-height" /> px
                             </label>
                         </li>
                     </ul>
                 </li>
             </ul>
             <div class="clear"></div>
-            <b>Choose type:</b>
+            
+            <div style="display:none;">
+            <b>Type:</b>
             <input type="radio" value="iframe" name="yType" checked="checked"/> {#youtube_dlg.iframe}
-            <input type="radio" value="embeded" name="yType" /> {#youtube_dlg.embed}
+            </div>
+            
+            </form>
+            
             <div class="clear"></div>
             <div class="mceActionPanel">
                 <input type="button" id="insert" name="insert" value="{#insert}" onclick="YoutubeDialog.insert();" />
