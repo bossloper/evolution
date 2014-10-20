@@ -29,15 +29,17 @@ tinyMCE.init({
 	theme_advanced_toolbar_align     : '[+toolbar_align+]',
 	theme_advanced_font_sizes        : '80%,90%,100%,120%,140%,160%,180%,220%,260%,320%,400%,500%,700%',
 	content_css                      : '[+content_css+]',
-	formats : {
+	/* uxello (added some fixes but dont use yet as issues with  use in emails) formats : {
 		alignleft   : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'justifyleft'},
 		alignright  : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'justifyright'},
-		alignfull   : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'justifyfull'}
-	},
+		alignfull   : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'justifyfull'},
+		aligncenter   : {selector : 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', classes : 'justifycenter'}
+	},*/
 	apply_source_formatting          : true,
 	remove_linebreaks                : false,
 	convert_fonts_to_spans           : true,
 	plugins                          : '[+plugins+]',
+	pagebreak_separator              :  '<span class="printingPageBreak"></span>', /* uxello */
 	theme_advanced_buttons1          : '[+buttons1+]',
 	theme_advanced_buttons2          : '[+buttons2+]',
 	theme_advanced_buttons3          : '[+buttons3+]',
@@ -73,9 +75,64 @@ tinyMCE.init({
 			}
 		});
 	},
+
+
+
+	//uxello clean up tables
+    paste_postprocess : function(pl, o) {
+		// Content DOM node containing the DOM structure of the clipboard
+		//alert(o.node.innerHTML);
+
+		var ed = pl.editor, dom = ed.dom;
+
+		// clean up tables from word or excel
+		tinymce.each(dom.select('*', o.node), function(el)
+			{    
+
+				if (el.tagName.toLowerCase() == "table") {
+					dom.setAttrib(el, 'cellspacing');
+					dom.setAttrib(el, 'cellpadding');
+					dom.setAttrib(el, 'width');
+					dom.setAttrib(el, 'height');
+				}
+				
+				if (el.tagName.toLowerCase() == "td" || el.tagName.toLowerCase() == "tr") {
+					dom.setAttrib(el, 'width');
+					dom.setAttrib(el, 'height');
+					dom.setAttrib(el, 'valign');
+					
+					if (dom.getAttrib(el, 'align') != "") {
+						dom.setStyle(el, 'text-align', dom.getAttrib(el, 'align'));
+						dom.setAttrib(el, 'align');
+					}
+					
+				}
+				
+				if (el.tagName.toLowerCase() == "colgroup") { 
+					dom.remove(el, 0); // 1 = KeepChildren 
+				}
+				
+			});
+
+		//alert(o.node.innerHTML);		
+	},
+
+
+
+
+
+
+
+
 	onchange_callback                : [+onchange_callback+][+terminate+]
 	[+customparams+]
 })
+</script>
+
+<script language="javascript" type="text/javascript">
+function myCustomOnChangeHandler() {
+	documentDirty = true;
+}
 </script>
 
 <style type="text/css">
