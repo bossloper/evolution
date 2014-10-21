@@ -1462,6 +1462,7 @@ ul.actionButtons {
 		-moz-transition: all .3s ease;
 		-o-transition: all .3s ease;
 		transition: .3s ease;
+		background:#F5F5F5;
 			background:-moz-linear-gradient(#FFFFFF, #F5F5F5);
 			background:-webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#F5F5F5));
 			background:-o-linear-gradient(#FFFFFF, #F5F5F5);
