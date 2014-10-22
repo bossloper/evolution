@@ -38,9 +38,13 @@ $textdir = $modx_textdir==='rtl' ? 'rtl' : 'ltr';
 
         var dontShowWorker = false;
         function document_onunload() {
-            if(!dontShowWorker) {
-                top.mainMenu.work();
-            }
+			try {
+				if(!dontShowWorker) {
+					top.mainMenu.work();
+				} 
+			} catch(oException) {
+                // catch for if running in frontend with QM+ and IE where there is no iframe and no working message needed
+			}
         }
 
         // set tree to default action.
