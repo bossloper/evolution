@@ -1081,6 +1081,11 @@ if(!isset($mg->mgconfig['pics_per_page']) || $mg->mgconfig['pics_per_page']==0 |
 //print out gallery overview
 $counter = 1;
 for($i=$offset;$i<$limit;$i++){
+
+	$pictureTplData['counter']=$counter;//uxello counter
+	$pictureTplData['picscount'] = count($pics); //uxello
+	$pictureTplData['pics_allowed_count'] = $mg->mgconfig['max_pic_number']; //uxello max to view
+
 	//if in query mode
 	if (count($mg->mgconfig['gal_query_ids']) > 0 || count($mg->mgconfig['pic_query_ids']) > 0) {
 		$mg->path_to_gal = $path_to_galleries.$pics[$i]['gal_id']."/";
@@ -1094,7 +1099,7 @@ for($i=$offset;$i<$limit;$i++){
 	$pics[$i]['title'] = stripslashes($pics[$i]['title']);
 	$pics[$i]['descr'] = stripslashes($pics[$i]['descr']);
 	$pictureTplData['picture'] = $pics[$i];
-	
+
 	//if in query mode
 	if (count($mg->mgconfig['gal_query_ids']) > 0 || count($mg->mgconfig['pic_query_ids']) > 0) {
 		$pictureTplData['picture_link_url'] = $modx->makeUrl($pics[$i]['gal_id'], '', "&pic=".$pics[$i]['id']."&from_id=".$modx->documentIdentifier);
