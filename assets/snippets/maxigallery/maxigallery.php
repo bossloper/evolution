@@ -61,6 +61,7 @@ $mgconfig['embedtype'] = (isset($embedtype)) ? $embedtype : ""; // [ slidebox | 
 $mgconfig['max_thumb_size'] = (isset($max_thumb_size)) ? $max_thumb_size : 130; // [ number for autosize | widthxheight to set biggest width and height for thumbnail ] 
 $mgconfig['max_pic_size'] = (isset($max_pic_size)) ? $max_pic_size : 450; // [ number for autosize | widthxheight to set biggest width and height for thumbnail | zero for unlimited size ] 
 $mgconfig['max_pic_number'] = (isset($max_pic_number)) ? $max_pic_number : 0; // [ number | 0 for unlimited number ] 
+$mgconfig['max_thumb_view'] = (isset($max_thumb_view)) ? $max_thumb_view : 0; // [ number | 0 for unlimited number ] //uxello for thumb display
 $mgconfig['quality_thumb'] = (isset($quality_thumb)) ? $quality_thumb : 70; // [ number between 0-100 ] 
 $mgconfig['quality_pic'] = (isset($quality_pic)) ? $quality_pic : 70; // [ number between 0-100 ] 
 $mgconfig['keep_bigimg'] = (isset($keep_bigimg)) ? $keep_bigimg : false; // [ true | false ] 
@@ -1084,7 +1085,7 @@ for($i=$offset;$i<$limit;$i++){
 
 	$pictureTplData['counter']=$counter;//uxello counter
 	$pictureTplData['picscount'] = count($pics); //uxello
-	$pictureTplData['pics_allowed_count'] = $mg->mgconfig['max_pic_number']; //uxello max to view
+	$pictureTplData['max_thumb_view'] = $mg->mgconfig['max_thumb_view']; //uxello max thumbs to view
 
 	//if in query mode
 	if (count($mg->mgconfig['gal_query_ids']) > 0 || count($mg->mgconfig['pic_query_ids']) > 0) {
