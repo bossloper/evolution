@@ -17,11 +17,7 @@
 	width: 12px;
 	height: 12px;
 	text-indent: -9999em;
-	background: url(../assets/js/jquery.nyroModal/img/close.gif);
-	
-		width: 30px;
-	height: 30px;
-		background: url(../images/modal8bitnav.png); /*uxello*/
+	background: url(../img/close.gif);
 }
 .nyroModalTitle {
 	top: -26px;
@@ -32,7 +28,7 @@
 }
 .nyroModalCont {
 	position: absolute;
-	border: 12px solid #eee;/*uxello*/
+	border: 4px solid #777;
 	margin: 25px;
 	background: #fff;
 }
@@ -53,7 +49,7 @@
 }
 .nyroModalLink, .nyroModalDom, .nyroModalForm, .nyroModalFormFile {
 	position: relative;
-	padding: 0; /*uxello*/
+	padding: 10px;
 	min-height: 250px;
 	min-width: 250px;
 	max-width: 1000px;
@@ -73,7 +69,7 @@
 	position: absolute;
 	width: 100px;
 	height: 100px;
-	background: #fff url(../assets/js/jquery.nyroModal/img/ajaxLoader.gif) no-repeat center;
+	background: #fff url(../img/ajaxLoader.gif) no-repeat center;
 	padding: 0;
 }
 .nyroModalPrev, .nyroModalNext {
@@ -97,7 +93,7 @@
 	left: 0;
 }
 .nyroModalPrev:hover {
-	background-image: url(../assets/js/jquery.nyroModal/img/prev.gif);
+	background-image: url(../img/prev.gif);
 }
 .nyroModalNext {
 	right: 0;
@@ -105,18 +101,5 @@
 }
 .nyroModalNext:hover {
 	background-position: right 20%;
-	background-image: url(../assets/js/jquery.nyroModal/img/next.gif);
-}
-
-/*uxello*/
-.nyroModalCont .modalTitle {
-	display:block!important;
-	line-height:1.4em;
-	padding: 0 10px;
-	color:#fff;
-	background:#666;
-	font-weight:normal;
-	margin:0;
-	z-index:3;
-	font-size:1.4em;
+	background-image: url(../img/next.gif);
 }
