@@ -140,9 +140,11 @@ while ( $row = $modx->db->getRow($ds) ) {
 
 //uxello create function so we can keep manager session if webusre login fails
 function webuserlogout() {
+		global $modx;
+		
         $internalKey = $_SESSION['webInternalKey'];
         $username = $_SESSION['webShortname'];
-
+		
         // invoke OnBeforeWebLogout event
         $modx->invokeEvent("OnBeforeWebLogout",
                                 array(
