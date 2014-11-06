@@ -62,7 +62,7 @@ $wf->_config = array(
 	'displayStart' => isset($displayStart) ? $displayStart : FALSE,
 	'entityEncode' => isset($entityEncode) ? $entityEncode : TRUE,
 	'hereId' => isset($hereId) ? intval($hereId) : $modx->documentIdentifier,
-'includePrivates' => isset($includePrivates) ? $includePrivates : 0 // uxello
+'includePrivates' => isset($includePrivates) ? ($includePrivates !='' ? $includePrivates  : 0) : 0 // uxello
 );
 
 //get user class definitions
