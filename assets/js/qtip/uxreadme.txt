@@ -1,1 +1,0 @@
-new jquery script for tooltips (qtip2) (used by diary v0.6.1+)

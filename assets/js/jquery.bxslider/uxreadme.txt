@@ -1,1 +1,0 @@
-update css image paths for modx
