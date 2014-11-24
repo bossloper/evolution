@@ -40,6 +40,7 @@ tinyMCE.init({
 	convert_fonts_to_spans           : true,
 	plugins                          : '[+plugins+]',
 	pagebreak_separator              :  '<span class="printingPageBreak"></span>', /* uxello */
+	spellchecker_languages : "+English=en_GB", /* uxello */
 	theme_advanced_buttons1          : '[+buttons1+]',
 	theme_advanced_buttons2          : '[+buttons2+]',
 	theme_advanced_buttons3          : '[+buttons3+]',
