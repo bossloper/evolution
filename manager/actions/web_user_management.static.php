@@ -149,6 +149,7 @@ echo $cm->render();
 //uxello add email dup check
 ",IF(wuae.ct>1,' (Warning: shared email address)',' ') as 'ctfmt'".
 ",FROM_UNIXTIME(wuau.lasthit,'%Y/%m/%d') as 'lastseenfmt'".
+",ip as 'ip'".
 	
 			"FROM ".$modx->getFullTableName("web_users")." wu ".
 			"INNER JOIN ".$modx->getFullTableName("web_user_attributes")." wua ON wua.internalKey=wu.id ".
@@ -178,10 +179,13 @@ echo $cm->render();
 //uxello	$grd->fields="id,username,fullname,email,gender,blocked";
 $grd->fields="id,username,fullname,email,lastlogin,blocked,webgroups";
 //uxello	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,".$_lang["user_gender"]." ,".$_lang["user_block"];
-	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Seen ,".$_lang["user_block"].", Webgroup(s)";
+	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Last Login (IP) ,".$_lang["user_block"].", Webgroup(s)";
 	$grd->colWidths="34,,,,40,34";
-	$grd->colAligns="center,,,,center,center";
-	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='".$_style["icons_user"]."' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>";
+	$grd->colAligns="center,,,,,,";
+	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='".$_style["icons_user"]."' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>
+	
+||||template:[+value+][+ctfmt+]||template:[+lastseenfmt+]&nbsp;([+ip+])";	
+	
 	if($listmode=='1') $grd->pageSize=0;
 	if($_REQUEST['op']=='reset') $grd->pageNumber = 1;
 	// render grid
