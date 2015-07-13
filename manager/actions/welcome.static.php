@@ -100,8 +100,8 @@ $modx->setPlaceholder('modx_security_notices_content',$feedData['modx_security_n
 
 // recent document info - modified by uxello to list all changes
 $sql = "SELECT sc.editedon as editedon, mu.username as username, sc.id, pagetitle, description FROM $dbase.`".$table_prefix."site_content` sc LEFT JOIN $dbase.`".$table_prefix."manager_users` mu ON sc.editedby=mu.id WHERE sc.deleted=0  ORDER BY editedon DESC LIMIT 75";
-$rs = mysql_query($sql);
-$limit = mysql_num_rows($rs);
+$rs = $modx->db->query($sql);
+$limit = $modx->db->getRecordCount($rs);
 if($limit<1) {
     $html .= '<ul><li>'.$_lang['no_activity_message'].'</li></ul>';
 } else {
@@ -111,7 +111,7 @@ if($limit<1) {
     $html .= "</thead>";    
     $html .= "<tbody>";
     for ($i = 0; $i < $limit; $i++) {
-        $content = mysql_fetch_assoc($rs);
+        $content = $modx->db->getRow($rs);
         if($i==0) {
             $syncid = $content['id'];
         }

@@ -1,7 +1,9 @@
 <?php
-if(IN_MANAGER_MODE!="true") die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODX Content Manager instead of accessing this file directly.");
+if(IN_MANAGER_MODE!="true") die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please use the MODx Content Manager instead of accessing this file directly.");
+
 if(!$modx->hasPermission('edit_web_user')) {
-	$modx->webAlertAndQuit($_lang["error_no_privileges"]);
+	$e->setError(3);
+	$e->dumpError();
 }
 
 // initialize page view state - the $_PAGE object
@@ -24,10 +26,10 @@ $_PAGE['vs']['lm'] = $listmode;
 
 
 // context menu
-include_once MODX_MANAGER_PATH."includes/controls/contextmenu.php";
+include_once $base_path."manager/includes/controls/contextmenu.php";
 $cm = new ContextMenu("cntxm", 150);
-$cm->addItem($_lang["edit"],"js:menuAction(1)",$_style["icons_edit_document"],(!$modx->hasPermission('edit_user') ? 1:0));
-$cm->addItem($_lang["delete"], "js:menuAction(2)",$_style["icons_delete"],(!$modx->hasPermission('delete_user') ? 1:0));
+$cm->addItem($_lang["edit"],"js:menuAction(1)","media/style/$manager_theme/images/icons/logging.gif",(!$modx->hasPermission('edit_user') ? 1:0));
+$cm->addItem($_lang["delete"], "js:menuAction(2)","media/style/$manager_theme/images/icons/delete.gif",(!$modx->hasPermission('delete_user') ? 1:0));
 echo $cm->render();
 
 ?>
@@ -85,7 +87,7 @@ echo $cm->render();
 <input type="hidden" name="op" value="" />
 
 <h1><?php echo $_lang['web_user_management_title']; ?></h1>
-<div class="section">
+
 <div class="sectionBody">
 	<p><?php echo $_lang['web_user_management_msg']; ?></p>
     
@@ -127,26 +129,28 @@ echo $cm->render();
     
     
 	<div class="searchbar">
-		<table border="0" style="width:100%" class="actionButtons">
+		<table border="0" style="width:100%">
 			<tr>
-			<td><a href="index.php?a=87"><img src="<?php echo $_style["icons_save"] ?>" /> <?php echo $_lang['new_web_user']; ?></a></td>
+			<td><a class="searchtoolbarbtn" href="index.php?a=87"><img src="<?php echo $_style["icons_save"] ?>" /> <?php echo $_lang['new_web_user']; ?></a></td>
 			<td nowrap="nowrap">
 				<table border="0" style="float:right"><tr><td><?php echo $_lang["search"]; ?></td><td><input class="searchtext" name="search" type="text" size="15" value="<?php echo $query; ?>" /></td>
-				<td><a href="#" title="<?php echo $_lang["search"];?>" onclick="searchResource();return false;"><?php echo $_lang["go"]; ?></a></td>
-				<td><a href="#" title="<?php echo $_lang["reset"];?>" onclick="resetSearch();return false;"><img src="<?php echo $_style["icons_refresh"]; ?>" /></a></td>
-				<td><a href="#" title="<?php echo $_lang["list_mode"];?>" onclick="changeListMode();return false;"><img src="<?php echo $_style["icons_table"]; ?>" /></a></td>
+				<td><a href="#" class="searchbutton" title="<?php echo $_lang["search"];?>" onclick="searchResource();return false;"><?php echo $_lang["go"]; ?></a></td>
+				<td><a href="#" class="searchbutton" title="<?php echo $_lang["reset"];?>" onclick="resetSearch();return false;"><img src="media/style/<?php echo $manager_theme ? "$manager_theme/":""; ?>images/icons/refresh.gif" width="16" height="16"/></a></td>
+				<td><a href="#" class="searchbutton" title="<?php echo $_lang["list_mode"];?>" onclick="changeListMode();return false;"><img src="media/style/<?php echo $manager_theme ? "$manager_theme/":""; ?>images/icons/table.gif" width="16" height="16"/></a></td>
 				</tr>
 				</table>
 			</td>
 			</tr>
 		</table>
 	</div>
+
 	<div>
 	<?php
 //uxello add webgroups
 	$sql = "SELECT GROUP_CONCAT(wgn.name SEPARATOR ', ') AS webgroups,wu.id,wu.username,wua.fullname,wua.email,IF(wua.gender=1,'".$_lang['user_male']."',IF(wua.gender=2,'".$_lang['user_female']."','-')) as 'gender',IF(wua.blocked,'".$_lang['yes']."','-') as 'blocked'" .
 
 //uxello add email dup check
+",IF(wua.blockeduntil>UNIX_TIMESTAMP(),FROM_UNIXTIME(wua.blockeduntil,'(%Y/%m/%d)'),'' ) as 'blockeduntil'".
 ",IF(wuae.ct>1,' (Warning: shared email address)',' ') as 'ctfmt'".
 ",FROM_UNIXTIME(wuau.lasthit,'%Y/%m/%d') as 'lastseenfmt'".
 ",ip as 'ip'".
@@ -166,7 +170,7 @@ echo $cm->render();
 
 
 			
-			($sqlQuery ? " WHERE (wu.username LIKE '{$sqlQuery}%') OR (wua.fullname LIKE '%{$sqlQuery}%') OR (wua.email LIKE '%{$sqlQuery}%')":"")." ".
+			($sqlQuery ? " WHERE (wu.username LIKE '$sqlQuery%') OR (wua.fullname LIKE '%$sqlQuery%') OR (wua.email LIKE '$sqlQuery%')":"")." ".
 			"GROUP BY wu.id ORDER BY username"; //uxello add webgroups
 	$ds = mysql_query($sql);
 	include_once $base_path."manager/includes/controls/datagrid.class.php";
@@ -179,18 +183,18 @@ echo $cm->render();
 //uxello	$grd->fields="id,username,fullname,email,gender,blocked";
 $grd->fields="id,username,fullname,email,lastlogin,blocked,webgroups";
 //uxello	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,".$_lang["user_gender"]." ,".$_lang["user_block"];
-	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Last Login (IP) ,".$_lang["user_block"].", Webgroup(s)";
+	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Last Login (IP),".$_lang["user_block"]." (until), Webgroup(s)";
 	$grd->colWidths="34,,,,40,34";
 	$grd->colAligns="center,,,,,,";
-	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='".$_style["icons_user"]."' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>
+	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='media/style/$manager_theme/images/icons/user.gif' width='18' height='18' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>
 	
-||||template:[+value+][+ctfmt+]||template:[+lastseenfmt+]&nbsp;([+ip+])";	
-	
+||||template:[+value+][+ctfmt+]||template:[+lastseenfmt+]&nbsp;([+ip+])||template:[+blocked+]&nbsp;[+blockeduntil+]";
+
 	if($listmode=='1') $grd->pageSize=0;
 	if($_REQUEST['op']=='reset') $grd->pageNumber = 1;
 	// render grid
 	echo $grd->render();
 	?>
 	</div>
-</div></div>
+</div>
 </form>

@@ -285,6 +285,9 @@ if ((isset($_REQUEST['dragsort']) && $_REQUEST['dragsort'] == 1)
 
 //manage pictures
 if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
+	
+	if($_REQUEST['mode']=="admin" && $mg->mgconfig['is_target']==-1) return; // uxello tweak (hijack is_target=-1) to prevent multi admin if two calls for same gallery
+	
 	if($_REQUEST['mode']=="admin" || ($mg->mgconfig['manage_gallery']!="" && $mg->mgconfig['manage_target']=="")) {
 		
 		// array to store the data for tpl
