@@ -51,7 +51,7 @@
 		
 		<!-- modx news -->
 		<div class="tab-page" id="tabNews" style="padding-left:0; padding-right:0">
-			<h2 class="tab">[+modx_news+]</h2>
+			<h2 class="tab">CMS News</h2>
 			<script type="text/javascript">tpPane.addTabPage( document.getElementById( "tabNews" ) );</script>
 			<div class="sectionHeader">[+modx_news_title+]</div><div class="sectionBody">
 				[+modx_news_content+]
