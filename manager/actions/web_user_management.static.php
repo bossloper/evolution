@@ -186,7 +186,7 @@ $grd->fields="id,username,fullname,email,lastlogin,blocked,webgroups";
 	$grd->columns=$_lang["icon"]." ,".$_lang["name"]." ,".$_lang["user_full_name"]." ,".$_lang["email"]." ,Last Login (IP),".$_lang["user_block"]." (until), Webgroup(s)";
 	$grd->colWidths="34,,,,40,34";
 	$grd->colAligns="center,,,,,,";
-	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='media/style/$manager_theme/images/icons/user.gif' width='18' height='18' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>
+	$grd->colTypes="template:<a class='gridRowIcon' href='#' onclick='return showContentMenu([+id+],event);' title='".$_lang["click_to_context"]."'><img src='".$_style["icons_user"]."' /></a>||template:<a href='index.php?a=88&id=[+id+]' title='".$_lang["click_to_edit_title"]."'>[+value+]</a>
 	
 ||||template:[+value+][+ctfmt+]||template:[+lastseenfmt+]&nbsp;([+ip+])||template:[+blocked+]&nbsp;[+blockeduntil+]";
 

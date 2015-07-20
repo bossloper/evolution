@@ -408,7 +408,18 @@ if(IN_MANAGER_MODE!="true") die("<b>INCLUDE_ORDERING_ERROR</b><br /><br />Please
             <tr>
             <td><a href="#" class="treeButton" id="Button1" onClick="expandTree();" title="<?php echo $_lang['expand_tree']; ?>"><?php echo $_style['expand_tree']; ?></a></td>
             <td><a href="#" class="treeButton" id="Button2" onClick="collapseTree();" title="<?php echo $_lang['collapse_tree']; ?>"><?php echo $_style['collapse_tree']; ?></a></td>
-            <?php if ($modx->hasPermission('new_document')) { ?>
+            <?php 
+			
+/* uxello hide add to root icons if cannot add to root */		
+include_once MODX_MANAGER_PATH ."processors/user_documents_permissions.class.php";
+$udperms = new udperms();
+$udperms->user = $modx->getLoginUserID();
+$udperms->document = 0;
+$udperms->role = $_SESSION['mgrRole'];
+
+if ($udperms->checkPermissions()) {
+		
+ ?>
                 <td><a href="#" class="treeButton" id="Button3a" onClick="top.main.document.location.href='index.php?a=4';" title="<?php echo $_lang['add_resource']; ?>"><?php echo $_style['add_doc_tree']; ?></a></td>
                 <td><a href="#" class="treeButton" id="Button3c" onClick="top.main.document.location.href='index.php?a=72';" title="<?php echo $_lang['add_weblink']; ?>"><?php echo $_style['add_weblink_tree']; ?></a></td>
             <?php } ?>

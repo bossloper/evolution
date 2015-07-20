@@ -105,7 +105,7 @@ $limit = $modx->db->getRecordCount($rs);
 if($limit<1) {
     $html .= '<ul><li>'.$_lang['no_activity_message'].'</li></ul>';
 } else {
-	$html .= "<p>Click the underlined title to redirect to the page. Sort the table by clicking on the column headers.</p><table class='sortabletable rowstyle-even' border='0' cellpadding='2' cellspacing='1' bgcolor='#ccc' width='100%'  >";
+	$html .= "<p>Click the underlined title/description to redirect to the page resource.</p><table class='sortabletable rowstyle-even' border='0' cellpadding='2' cellspacing='1' bgcolor='#ccc' width='100%'  >";
     $html .= "<thead>";
     $html .= "<tr><th style='text-align:left;' class='sortable'>Date</th><th style='text-align:left;' class='sortable'>Manager</th><th style='text-align:left;' class='sortable'>ID</th><th style='text-align:left;' class='sortable'>Title/Description</th></tr>";  
     $html .= "</thead>";    

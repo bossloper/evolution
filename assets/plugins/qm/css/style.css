@@ -175,15 +175,15 @@
     width: 100%;
     line-height:1;
     z-index: 9999;
-	background: #657587 url(images/tinylogo.png) no-repeat -2px 3px;
+	background: #232b2d url(images/tinylogo.png) no-repeat -2px 3px!important;
 	text-align: left;
 	opacity:0.5; 
-    ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
+/*    ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; 
 	filter: alpha(opacity=50);
 	top: -28px;
 	-webkit-transition-duration: 0.7s;
 	-moz-transition-duration: 0.7s;
-	transition-duration: 0.7s;
+	transition-duration: 0.7s;*/
 }
  
 #qmEditor *:focus, #qmEditor *:active 
@@ -208,15 +208,14 @@
 }
 
 #qmEditor .qmId {
-	font-size: 20px;
-	line-height: 25px;
+	font-size: 13px;
+	line-height: 26px;
 	color: black;
 }
 
 #qmEditor .qmEdit span, .qm-edit span, .qm-save span, .qm-tv span
 {
-    background: transparent url(images/save.png) no-repeat left center;
-    padding-left: 20px;
+
 }
 
 #qmEditor .qmButton span
@@ -289,27 +288,30 @@
 
 #qmEditor .qmButton, .qm-edit, .qm-new, .qm-tv, .qm-save, .qm-cancel  
 {
-	border: 1px solid #BBB;
-	border-radius: 3px 3px 3px 3px;
-	color: #333;
-	font-weight: normal;
-	outline: medium none;
-	padding: 3px 8px 3px 4px;
-	text-decoration: none;
-	vertical-align: top;
-	white-space: nowrap;
+color:#FFF; 
+font-weight:bold; 
+font-size:13px;
+line-height:normal;
+padding:5px 11px; 
+white-space:nowrap; 
+vertical-align:top; 
+text-decoration:none; 
+outline:none; 
+border-radius:3px; 
+-webkit-border-radius:3px; 
+-moz-border-radius:3px; 
+box-shadow:inset 0 1px 0 rgba(255,255,255,0.4); 
+-webkit-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4); 
+-moz-box-shadow:inset 0 1px 0 rgba(255,255,255,0.4); 
+/*  text-shadow: 0 -1px 0 rgba(0, 0, 0, .40);*/
+background-color: #444;
 }
 
 #qmEditor .qmButton:hover, .qm-edit:hover, .qm-new:hover, .qm-tv:hover, .qm-save:hover, .qm-cancel:hover  
 {
-	border-color: #999;
-
-		-webkit-transition: all .3s ease;
-		-moz-transition: all .3s ease;
-		-o-transition: all .3s ease;
-		transition: .3s ease;
-		background:#d5e5d5!important;
-		color:#333!important;
+color: #fff;
+  /*background-image:none;*/
+   background-color: #222222;
 
 }
 
@@ -332,31 +334,22 @@ html { margin-top: 32px; }
 
 #qmEditor {
 	top:0;
-	background: url("../../../../manager/media/style/MODxREUX/images/misc/headers.jpg") repeat scroll 0 0 #23393C;
-	border-bottom: 1px solid #444;
+
+	border-bottom: 2px solid #499bea;
     opacity:1; 
     -ms-filter:"" !important;
     filter:none !important;
 }
 #qmEditor .qmId {
-	color: #999;
+	color: #499bea;
 }
-#qmEditor .qmButton, .qm-edit, .qm-new, .qm-tv, .qm-save, .qm-cancel  
-{
-	
-background-color: #666;
-color:#eee;
-border-color:#777;
 
-}
-#qmEditor .qmButton:hover, .qm-edit:hover, .qm-new:hover, .qm-tv:hover, .qm-save:hover, .qm-cancel:hover  
-{
-	color:#fff;
-}
 
 #qmEditor .qmButton.qmEdit{
-	border-color: #c0c04b!important;
-	background-color:#90901b;
+	background-color:#499bea;
+}
+#qmEditor .qmButton.qmEdit:hover{
+	background-color:#3283d4;
 }
 
 #qmEditor .qm-custom-1 {
@@ -364,9 +357,13 @@ border-color:#777;
 }
 
 #qmEditor .qmButton.qmManager {
-	border-color: #96c04b !important;
-	background-color:#66901b;
+	background-color:#6dbe3e;
 }
+#qmEditor .qmButton.qmManager:hover {
+	background-color:#579832;
+}
+
+
 
 #qmEditor #qmLogout {
 	margin-left:30px;
