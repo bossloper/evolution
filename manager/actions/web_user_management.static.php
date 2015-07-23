@@ -180,6 +180,7 @@ echo $cm->render();
 	$grd->cssClass="grid";
 	$grd->columnHeaderClass="gridHeader";
 	$grd->itemClass="gridItem";
+	$grd->pagerClass="pagerClass";
 	$grd->altItemClass="gridAltItem";
 //uxello	$grd->fields="id,username,fullname,email,gender,blocked";
 $grd->fields="id,username,fullname,email,lastlogin,blocked,webgroups";

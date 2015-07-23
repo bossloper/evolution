@@ -874,6 +874,27 @@ padding:5px;
 	vertical-align: middle;
 	padding-right: 4px;
 }
+.grid .pagerClass {
+	background:#eee!important;
+	text-align:right!important;
+	line-height:26px
+}
+.grid .pagerClass span, .grid .pagerClass a {
+	background:#999;
+	padding:5px 5px;
+-moz-border-radius:3px; 
+-webkit-border-radius:3px; 
+-ms-border-radius:3px; 
+-o-border-radius:3px; 
+border-radius:3px; 
+}
+.grid .pagerClass a {
+		background:#499bea;
+color:#fff;
+}
+.grid .pagerClass a:hover {
+		background:#333;
+}
 /* -------------------------[ search bar ]--- */
 .searchbar {
 	width: 100%;
@@ -881,6 +902,7 @@ padding:5px;
 .searchtext {
 	height: 18px;
 	padding: 2px;
+	margin-top:-5px!important;
 }
 .searchbutton {
 	width: 22px;

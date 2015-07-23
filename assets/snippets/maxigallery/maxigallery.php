@@ -449,7 +449,7 @@ if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
 				for($i=0;$i<$_REQUEST['number'];$i++) {
 					if($_REQUEST['delete'.$i]=='yes') {
 						$rs0=$modx->db->query("SELECT id,filename FROM $mg->pics_tbl WHERE id='" . $_REQUEST['pic_id'.$i] . "'");
-						$deletepic=$modx->fetchRow($rs0);
+						$deletepic=$modx->db->getRow($rs0);
 						if($deletepic['filename'] != "") {
 							if(file_exists($mg->path_to_gal.$deletepic['filename'])) 
 								unlink($mg->path_to_gal.$deletepic['filename']);
@@ -495,7 +495,7 @@ if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
 				}
 				$rs1=$modx->db->query($sql);
 				
-				while($deletepic=$modx->fetchRow($rs1)) {
+				while($deletepic=$modx->db->getRow($rs1)) {
 					$file = $mg->path_to_gal.$pic['filename'];
 					if(file_exists($mg->path_to_gal.$deletepic['filename'])) 
 						unlink($mg->path_to_gal.$deletepic['filename']);
@@ -640,7 +640,7 @@ if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
 		
 		$manageOuterTplData['managepictures'] = '';
 		
-		while($pic=$modx->fetchRow($rs1)) {
+		while($pic=$modx->db->getRow($rs1)) {
 			$file = $mg->path_to_gal.$pic['filename'];
 			$tn_file = $mg->path_to_gal . "tn_" . $pic['filename'];
 			

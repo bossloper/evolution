@@ -124,6 +124,7 @@ echo $cm->render();
 	$grd->cssClass="grid";
 	$grd->columnHeaderClass="gridHeader";
 	$grd->itemClass="gridItem";
+	$grd->pagerClass="pagerClass";
 	$grd->altItemClass="gridAltItem";
 	$grd->fields            = "id,username,fullname,role,email,gender,blocked,thislogin";
 	$grd->columns           = implode(',', array($_lang["icon"],$_lang["name"],$_lang["user_full_name"],$_lang['role'],

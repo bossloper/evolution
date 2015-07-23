@@ -74,7 +74,7 @@ defined('IN_PARSER_MODE') or die();
 			"wua.email='".$modx->db->escape($email)."'");
 
 //uxello - modify to enable sending to accounts with duplicate email addresses
-$limit = $modx->recordCount($ds); //uxello
+$limit = $modx->db->getRecordCount($ds); //uxello
 if($limit>=1) {		
 // loop each record
 while ( $row = $modx->db->getRow($ds) ) {
