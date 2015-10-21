@@ -982,6 +982,7 @@ class ditto {
 	function cleanIDs($IDs) {
 		//Define the pattern to search for
 		$pattern = array (
+			'/\s+/', //Spaces
 			'`(,)+`', //Multiple commas
 			'`^(,)`', //Comma on first position
 			'`(,)$`' //Comma on last position
@@ -989,6 +990,7 @@ class ditto {
 
 		//Define replacement parameters
 		$replace = array (
+			'',
 			',',
 			'',
 			''
@@ -1120,7 +1122,8 @@ class ditto {
 			$max_x = $totalpages - 1;
 			$min_x = $max_x - $max_paginate + 1;
 		}
-
+		
+		$modx->setPlaceholder("dittoID", $dittoID); //uxello
 		for ($x = 0; $x <= $totalpages -1; $x++) {
 			$inc = $x * $summarize;
 			$display = $x +1;
@@ -1155,6 +1158,7 @@ class ditto {
 		global $modx, $dittoID;
 		$set = $modx->getPlaceholder($dittoID."ditto_pagination_set");
 		if ($paginate && $set !== true) {
+			$modx->setPlaceholder("dittoID", $dittoID); //uxello
 			$modx->setPlaceholder($dittoID."next", "");
 			$modx->setPlaceholder($dittoID."previous", "");
 			$modx->setPlaceholder($dittoID."splitter", "");
