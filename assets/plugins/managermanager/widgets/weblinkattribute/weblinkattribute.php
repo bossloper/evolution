@@ -12,7 +12,7 @@ function mm_widget_weblinkattribute($roles='', $templates='') {
 	$e = &$modx->Event;
 	
 	// only if a weblink
-	if ($content['type'] == 'reference' || $_REQUEST['a'] == 72) {
+	if ((is_array($content) && $content['type'] == 'reference') || $_REQUEST['a'] == 72) {
 
 	// if the current page is being edited by someone in the list of roles, and uses a template in the list of templates
 	if ($e->name == 'OnDocFormRender' && useThisRule($roles, $templates)){
