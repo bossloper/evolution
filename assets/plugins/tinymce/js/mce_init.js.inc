@@ -1,5 +1,5 @@
 <script language="javascript" type="text/javascript" src="[+mce_url+]tiny_mce/tiny_mce.js?[+refresh_seed+]"></script>
-<script language="javascript" type="text/javascript" src="[+mce_url+]js/xconfig.js"></script>
+<script language="javascript" type="text/javascript" src="[+mce_url+]js/xconfig.js?[+refresh_seed+]"></script>
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
 	theme                            : 'advanced',
@@ -75,7 +75,31 @@ tinyMCE.init({
 				o.content = o.content.replace(/([\]\!\~\^])\]<\/p>/g, '$1]');
 			}
 		});
+		
+
+
+	  
+	  
+	  // remove embedded images
+	  			function stripBase64images(){
+				var _html = ed.getContent({format : 'raw'});
+				if (_html.match(/<img[^>]+src="data:image.*?;base64[^>]*?>/g)){
+					_html = _html.replace(/<img[^>]+src="data:image.*?;base64[^>]*?>/g, '');			
+					ed.setContent(_html, {format : 'raw'});
+					alert('Sorry, dragging/pasting images directly into the editor is not permitted.\nPlease use the "Manage pictures" button.');
+				}
+			}
+	/// comment out for now as prevents spellchecker working - getContent cleans	
+	/// setInterval(stripBase64images,1500);
+      
+	  ed.onSaveContent.add(function(ed, o) {
+// remove embedded images anyway if trying to beat the timer!
+o.content = o.content.replace(/<img[^>]+src="data:image.*?;base64[^>]*?>/g, '');
+      });
+	  
 	},
+
+
 
 
 
