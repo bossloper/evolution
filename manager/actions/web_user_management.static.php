@@ -148,7 +148,7 @@ echo $cm->render();
 	<div>
 	<?php
 //uxello add webgroups
-	$sql = "SELECT GROUP_CONCAT(wgn.name SEPARATOR ', ') AS webgroups,wu.id,wu.username,wua.fullname,wua.email,IF(wua.gender=1,'".$_lang['user_male']."',IF(wua.gender=2,'".$_lang['user_female']."','-')) as 'gender',IF(wua.blocked,'".$_lang['yes']."','-') as 'blocked'" .
+	$sql = "SELECT GROUP_CONCAT(wgn.name ORDER BY wgn.name SEPARATOR ', ') AS webgroups,wu.id,wu.username,wua.fullname,wua.email,IF(wua.gender=1,'".$_lang['user_male']."',IF(wua.gender=2,'".$_lang['user_female']."','-')) as 'gender',IF(wua.blocked,'".$_lang['yes']."','-') as 'blocked'" .
 
 //uxello add email dup check
 ",IF(wua.blockeduntil>UNIX_TIMESTAMP(),FROM_UNIXTIME(wua.blockeduntil,'(%Y/%m/%d)'),'' ) as 'blockeduntil'".

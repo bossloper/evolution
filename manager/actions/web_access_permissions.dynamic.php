@@ -89,10 +89,15 @@ function deletegroup(groupid,type) {
 	} else {
 		echo "<ul class=\"permissiongroups\">\n";
 		$pid = '';
+		$groupcount=0;
 		while ($row = $modx->db->getRow($rs)) {
 			if ($row['id'] !== $pid) {
-				if ($pid != '') echo "</li></ul></li>\n"; // close previous one
-
+				if ($pid != '') {
+					if ($groupcount) echo "<br/>Total=".$groupcount;
+					echo "</li></ul></li>\n"; // close previous one
+				}
+				$groupcount=0;
+				
 				// display the current user group with a rename/delete form
 				echo '<li><form method="post" action="index.php" name="accesspermissions" style="margin-top: 0.5em;">'."\n".
 				'	<input type="hidden" name="a" value="92" />'."\n".
@@ -114,8 +119,11 @@ function deletegroup(groupid,type) {
 			}
 			if ($pid == $row['id']) echo ', '; // comma separation :)
 			echo '<a href="index.php?a=88&amp;id='.$row['user_id'].'">'.$row['user_name'].'</a>';
+			$groupcount++;
+			
 			$pid = $row['id'];
 		}
+		if ($groupcount) echo "<br/>Total=".$groupcount;
 		echo "</li></ul></li>\n";
 		echo "</ul>\n";
 	}
