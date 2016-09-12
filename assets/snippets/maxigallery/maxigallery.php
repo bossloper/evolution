@@ -435,7 +435,7 @@ if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
 			
 			
 			
-			
+			$modx->clearCache(); //uxello
 			
 			
 			
@@ -444,6 +444,7 @@ if($mg->checkPermissions($_SESSION['mgrInternalKey'],$mg->pageinfo['id'])) {
 		if($_REQUEST['action']=='edit_pics' || $_REQUEST['action']=='delete_pics' || $_REQUEST['action']=='gallery_synch') {
 			
 			$mg->updateEditedOn($mg->pageinfo['id']); //uxello
+			$modx->clearCache(); //uxello
 			
 			if($_REQUEST['action']=='edit_pics') { // If "save changes" has been used
 				for($i=0;$i<$_REQUEST['number'];$i++) {
